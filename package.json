@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L /app/index.coffee",
     "docker-nodemon": "docker run --rm -p 8081:8081 -it -v $(pwd):/app boothapi npm start",
-    "docker-npm": "docker run --rm -it -v $(pwd):/app boothapi npm $NPM"
+    "docker-npm": "docker run --rm -it -v $(pwd):/app boothapi npm $NPM",
+    "docker-build" : "docker build -t boothapi ."
   },
   "author": "",
   "license": "ISC",
