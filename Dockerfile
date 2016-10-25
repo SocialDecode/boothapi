@@ -1,5 +1,5 @@
 FROM node:4
-RUN apt-get -y update && npm install -g coffee-script && npm install -g nodemon
+RUN apt-get -y update && npm install -g coffee-script && npm install -g forever && npm install -g nodemon
 
 WORKDIR /app
 ADD package.json /app/

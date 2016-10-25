@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L /app/index.coffee",
+    "startback" : "forever start -c coffee /app/index.coffee",
     "docker-nodemon": "docker run --rm -p 8081:8081 -it -v $(pwd):/app boothapi npm start",
     "docker-npm": "docker run --rm -it -v $(pwd):/app boothapi npm $NPM",
     "docker-npminstall" : "docker run --rm -it -v $(pwd):/app boothapi npm install",
