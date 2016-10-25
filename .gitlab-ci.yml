@@ -9,6 +9,7 @@ variables:
   CONTAINER_TEST_IMAGE: git.socialdecode.com:4567/socialdecode/boothapi:$CI_BUILD_REF_NAME
   CONTAINER_RELEASE_IMAGE: git.socialdecode.com:4567/socialdecode/boothapi:latest
 before_script:
+  - echo "$CONFIG" > config.json
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.socialdecode.com:4567
 build:
   stage: build
