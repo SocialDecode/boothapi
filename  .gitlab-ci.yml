@@ -1,0 +1,17 @@
+image: docker:latest
+services:
+- docker:dind
+stages:
+- build
+- release
+- deploy
+variables:
+  CONTAINER_TEST_IMAGE: git.socialdecode.com:4567/socialdecode/boothapi:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: git.socialdecode.com:4567/socialdecode/boothapi:latest
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN git.socialdecode.com:4567
+build:
+  stage: build
+  script:
+    - docker build --pull -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
