@@ -37,13 +37,11 @@ server.route {
 			yarespondidas = data.yapreguntadas.rows.map (e)-> e.preguntaid.toString()
 			posiblespreguntas = data.preguntas.rows.filter (e)-> yarespondidas.indexOf(e.preguntaid.toString()) is -1
 
-
-
 			#datos de cajon
-			retval.leaderboard = data.leaderboard.rows.map (e)-> [e.name,e.photo, Math.round(10/e.ans*e.correct,2) or 0]
+			retval.leaderboard = data.leaderboard.rows.map (e)-> [e.name,e.photo, e.correct or 0]
 			retval.leaderboard.sort (a,b)-> b[2]-a[2]
 			retval.leaderboard = retval.leaderboard[0..9]
-			retval.status.g = data.leaderboard.rows.filter((e)->return e.userid is request.payload.id).map((e)->( Math.round(10/e.ans*e.correct,2) or 0))[0]
+			retval.status.g = data.leaderboard.rows.filter((e)->return e.userid is request.payload.id).map((e)->( e.correct or 0))[0]
 
 			return reply(retval) if posiblespreguntas.length is 0
 
