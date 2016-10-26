@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "lab -c",
+    "test": "lab -c -m 5000",
     "start": "nodemon -L /app/index.coffee",
     "importdata": "docker run --rm -p 8081:8081 -it -v $(pwd):/app boothapi coffee /app/test/questionloader.coffee",
     "startback": "forever start -c coffee /app/index.coffee",

@@ -50,6 +50,7 @@ server.route {
 			retval.q = lapregunta.q
 			retval.a = lapregunta.as.map (e)->
 				return {id:crypto.createHash('md5').update(e).digest("hex"), text:e}
+			console.log "Mandando #{retval.id} #{retval.q} a #{request.payload.id}"
 			return reply(retval)
 }
 
