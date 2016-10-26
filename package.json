@@ -5,6 +5,7 @@
   "scripts": {
     "test": "lab -c",
     "start": "nodemon -L /app/index.coffee",
+    "importdata": "docker run --rm -p 8081:8081 -it -v $(pwd):/app boothapi coffee /app/test/questionloader.coffee",
     "startback": "forever start -c coffee /app/index.coffee",
     "docker-test": "docker run --rm -p 8081:8081 -it -v $(pwd):/app boothapi npm test",
     "docker-nodemon": "docker run --rm -p 8081:8081 -it -v $(pwd):/app boothapi npm start",
@@ -19,6 +20,7 @@
     "cassandra-driver": "^3.1.5",
     "code": "^4.0.0",
     "coffee-script": "^1.11.1",
+    "csvtojson": "^1.0.3",
     "hapi": "^15.1.1",
     "lab": "^11.1.0"
   }
