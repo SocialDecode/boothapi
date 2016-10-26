@@ -68,5 +68,10 @@ lab.experiment "Basic HTTP Tests", ->
 					Code.expect(data4.rows[0].ans).to.equal(2)
 					Code.expect(data4.rows[0].correct).to.equal(1)
 					done()
-
-
+	lab.test "Any Answer", (done)->
+		cassandra.execute "delete from concursobooth.respuestas where userid = ? and preguntaid = ?", [userdata.id, question.preguntaid], (err5,data2)->
+			Code.expect(err5).to.be.null()
+			server.inject {method:"POST",url:"/resp", payload:{userid:userdata.id,id:question.preguntaid.toString(),r:"cualquiercosa"}}, (response)->
+				Code.expect(response.statusCode).to.equal(500)
+				Code.expect(response.result,"Payload").to.be.an.object()
+				done()

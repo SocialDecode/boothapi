@@ -61,7 +61,7 @@ server.route {
 		return reply(new Error('Invalid Body')) if !request.payload.userid? or !request.payload.id? or !request.payload.r?
 		async.parallel {
 			pregunta : (cb)->
-				cassandra.execute "select \"a\" from concursobooth.preguntas where preguntaid = ?",[request.payload.id],{prepare:true}, cb
+				cassandra.execute "select \"a\", \"as\" from concursobooth.preguntas where preguntaid = ?",[request.payload.id],{prepare:true}, cb
 			respuesta : (cb)->
 				cassandra.execute "select userid,preguntaid from concursobooth.respuestas where preguntaid = ? and userid = ?",[request.payload.id,request.payload.userid],{prepare:true}, cb
 			userdata : (cb)->
@@ -69,7 +69,9 @@ server.route {
 		},(err,data)->
 			console.log err if err?
 			return reply(err) if err?
-			return reply(new Error('Invalid Question')) if !Array.isArray(data.pregunta?.rows) or data.pregunta.rows.length isnt 1 
+			return reply(new Error('Invalid Question')) if !Array.isArray(data.pregunta?.rows) or data.pregunta.rows.length isnt 1
+			#console.log data.pregunta.rows[0].as.map((e)->return crypto.createHash('md5').update(e).digest("hex")), request.payload.r
+			return reply(new Error('Invalid Answer')) if data.pregunta.rows[0].as.filter((e)->return request.payload.r is crypto.createHash('md5').update(e).digest("hex")).length isnt 1
 			return reply(new Error('Invalid User')) if !Array.isArray(data.userdata?.rows) or data.userdata.rows.length isnt 1
 			userdata = data.userdata.rows[0]
 			retval = {
