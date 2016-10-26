@@ -17,7 +17,6 @@ server.route {
 	path:'/ask', 
 	"handler": (request, reply) ->
 		return reply(new Error('Invalid Body')) if !request.payload?.id?
-		retval = {status:{}}
 		async.parallel {
 			guardaplayer: (cb)->
 				updatepayload = {userid:request.payload.id,payload:JSON.stringify(request.payload)}
@@ -34,6 +33,7 @@ server.route {
 		},(err,data)->
 			console.log err if err?
 			return reply(err) if err?
+			retval = {status:{}}
 			yarespondidas = data.yapreguntadas.rows.map (e)-> e.preguntaid.toString()
 			posiblespreguntas = data.preguntas.rows.filter (e)-> yarespondidas.indexOf(e.preguntaid.toString()) is -1
 
